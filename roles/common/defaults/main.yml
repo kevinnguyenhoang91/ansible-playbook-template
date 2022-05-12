@@ -1,0 +1,17 @@
+---
+common_enabled: false
+upgrade_packages_enabled: false
+users_enabled: false
+directories_enabled: false
+packages_enabled: false
+common_purge_enabled: false
+machine_user: a_user
+machine_group: a_group
+machine_password: a_password
+working_dir: /mnt/WORKING
+project_dir: "{{ working_dir }}/project"
+arch: amd64
+arch_: x86_64
+aptcachetime: 3600
+install_packages: []
+install_snap_packages: []

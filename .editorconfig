@@ -1,0 +1,33 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+[*.md]
+indent_style = space
+indent_size = 2
+
+[**.{yml,yaml,yamllint,yml.j2}]
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.sh]
+trim_trailing_whitespace = true
+
+[devices-ios.txt]
+indent_style = tab
+trim_trailing_whitespace = true
+
+[{Vagrantfile,Vagrantfile.*}]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+[{inventory,inventory.*}]
+trim_trailing_whitespace = true

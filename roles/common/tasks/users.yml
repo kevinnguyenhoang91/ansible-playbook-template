@@ -1,0 +1,30 @@
+---
+- name: Check group exists.
+  group:
+    name: "{{ machine_group }}"
+    state: present
+  check_mode: true
+  register: group_info
+
+- name: Check user exists.
+  user:
+    name: "{{ machine_user }}"
+    state: present
+  check_mode: true
+  register: user_info
+
+- name: Add group on the app servers for the server administrators.
+  group:
+    name: "{{ machine_group }}"
+    state: present
+  when:
+    - group_info.gid is not defined
+
+- name: Add the user to the group.
+  user:
+    name: "{{ machine_user }}"
+    password: "{{ machine_password | password_hash('sha512') }}"
+    group: "{{ machine_group }}"
+    createhome: true
+  when:
+    - user_info.uid is not defined

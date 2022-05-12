@@ -1,0 +1,11 @@
+*.swp
+*.log
+.env
+.vagrant/
+.DS_Store
+*.retry
+/.galaxy/
+/TODO.md
+*.retry
+group_vars/_*.yml
+group_vars/local.yml

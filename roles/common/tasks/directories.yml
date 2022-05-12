@@ -1,0 +1,12 @@
+---
+- name: Ensure working directory is existed.
+  file:
+    path: "{{ working_dir }}"
+    state: directory
+
+- name: Ensure project directory is existed.
+  file:
+    path: "{{ project_dir }}"
+    state: directory
+    owner: "{{ machine_user }}"
+    group: "{{ machine_group }}"

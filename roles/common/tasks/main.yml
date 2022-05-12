@@ -1,0 +1,12 @@
+---
+- include_tasks: users.yml
+  when: users_enabled | bool
+
+- include_tasks: directories.yml
+  when: directories_enabled | bool
+
+- include_tasks: packages.yml
+  when: packages_enabled | bool
+
+- include_tasks: common-purge.yml
+  when: common_purge_enabled | bool

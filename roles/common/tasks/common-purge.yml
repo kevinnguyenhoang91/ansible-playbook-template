@@ -1,0 +1,38 @@
+---
+- name: Collect project directories.
+  find:
+    paths: "{{ project_dir }}"
+    hidden: true
+    recurse: false
+    file_type: directory
+  register: collected_project_directories
+
+- name: Delete project directory.
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ collected_project_directories.files }}"
+
+- name: Collect project files.
+  find:
+    paths: "{{ project_dir }}"
+    hidden: true
+    recurse: false
+    file_type: file
+  register: collected_project_files
+
+- name: Delete project files.
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ collected_project_files.files }}"
+
+- command: ls "{{ project_dir }}"
+  register: info
+
+- debug: var=info.stdout
+
+- command: ls "{{ working_dir }}"
+  register: info
+
+- debug: var=info.stdout
