@@ -1,0 +1,25 @@
+---
+- name: Docker prune.
+  docker_prune:
+    containers: true
+    images: true
+    images_filters:
+      dangling: true
+    networks: true
+    volumes: true
+    builder_cache: true
+
+- name: Stop docker service.
+  service:
+    name: docker
+    state: stopped
+
+- name: Delete docker daemon.
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+
+- name: Start docker service.
+  service:
+    name: docker
+    state: started

@@ -1,0 +1,29 @@
+---
+- name: Restart docker service.
+  service:
+    name: docker
+    state: restarted
+
+- name: Stop docker registry instance by docker-compose.
+  become_user: "{{ machine_user }}"
+  docker_compose:
+    project_src: "{{ project_dir }}"
+    files: [docker-compose-registry.yml]
+    state: absent
+  async: 86400
+  poll: 5
+
+- name: Start docker registry instance by docker-compose.
+  become_user: "{{ machine_user }}"
+  docker_compose:
+    project_src: "{{ project_dir }}"
+    files: [docker-compose-registry.yml]
+    pull: true
+    state: present
+    recreate: always
+  async: 86400
+  poll: 5
+
+- name: Reboot machine.
+  reboot:
+    reboot_timeout: 1800

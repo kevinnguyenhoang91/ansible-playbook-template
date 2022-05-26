@@ -1,0 +1,6 @@
+---
+rclone_enabled: false
+rclone_purge_enabled: false
+rclone_arch: "{{ arch }}"
+install_manpages: false
+rclone_version: "1.58.0"

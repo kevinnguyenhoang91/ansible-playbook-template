@@ -1,0 +1,22 @@
+---
+- name: Ensure docker data directory is existed.
+  file:
+    path: "{{ docker_data_dir }}"
+    state: directory
+  notify: Restart docker service.
+  when: docker_install_enabled | bool
+
+- include_tasks: kvm.yml
+  when: kvm_enabled | bool
+
+- include_tasks: docker-private-registry.yml
+  when: docker_private_registry_enabled | bool
+
+- include_tasks: docker-login-private-registry.yml
+  when: docker_login_private_registry_enabled | bool
+
+- include_tasks: docker-purge.yml
+  when: docker_purge_enabled | bool
+
+- include_tasks: docker-info.yml
+  when: docker_info_enabled | bool

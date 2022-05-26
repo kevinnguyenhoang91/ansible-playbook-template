@@ -1,0 +1,14 @@
+---
+docker_enabled: false
+docker_install_enabled: false
+docker_private_registry_enabled: false
+kvm_enabled: false
+docker_login_private_registry_enabled: false
+docker_purge_enabled: false
+docker_info_enabled: false
+docker_data_dir: "{{ working_dir }}/docker_data"
+docker_private_registry_login_username: "{{ machine_user }}"
+docker_private_registry_login_password: "{{ machine_password }}"
+docker_private_registry_port: "5000"
+docker_private_registry_ip: "127.0.0.1"
+docker_private_registry_address: "{{ docker_private_registry_ip }}:{{ docker_private_registry_port }}"

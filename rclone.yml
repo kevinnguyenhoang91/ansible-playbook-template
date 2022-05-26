@@ -1,0 +1,15 @@
+---
+- name: Setup rclone.
+  hosts: all
+  become: true
+  tags:
+    - rclone
+    - rclone_setup
+
+  vars_files:
+    - vaults/vault.yml
+
+  roles:
+    - name: Setup rclone.
+      role: stefangweichinger.ansible_rclone
+      when: rclone_enabled | bool

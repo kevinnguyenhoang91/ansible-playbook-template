@@ -1,5 +1,7 @@
 ---
 common_enabled: true
+docker_enabled: true
+rclone_enabled: true
 
 # common role
 machine_user: my_user

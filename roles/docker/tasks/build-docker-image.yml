@@ -1,0 +1,37 @@
+---
+- name: Check image existed.
+  docker_image_info:
+    name: "{{ item.docker_image_name }}"
+  run_once: true
+  delegate_to: "{{ delegate_to_host }}"
+  register: docker_image_info
+
+- name: Create .dockerignore file at "{{ build_dir }} for building "{{ item.docker_image_name }}".
+  template:
+    src: ".dockerignore.j2"
+    dest: "{{ build_dir }}/.dockerignore"
+    owner: "{{ machine_user }}"
+    group: "{{ machine_group }}"
+    mode: 0644
+  run_once: true
+  delegate_to: "{{ delegate_to_host }}"
+  when: docker_image_info.images | length == 0
+
+- name: Build Docker image "{{ item.docker_image_name }}" in build context dir "{{ build_dir }}".
+  become_user: "{{ machine_user }}"
+  docker_image:
+    build:
+      path: "{{ build_dir }}"
+      dockerfile: "Dockerfile.custom"
+      args:
+        IMAGE_SOURCE_PATH: "./img/{{ item.name }}"
+        CACHE_IMAGE_SOURCE_PATH: "./img/cache"
+    name: "{{ item.docker_image_name }}"
+    push: true
+    source: build
+    force_source: true
+  async: 86400
+  poll: 5
+  run_once: true
+  delegate_to: "{{ delegate_to_host }}"
+  when: docker_image_info.images | length == 0

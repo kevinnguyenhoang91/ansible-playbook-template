@@ -1,0 +1,50 @@
+---
+- name: Setup Docker
+  hosts: all
+  become: true
+  tags:
+    - docker
+    - docker_setup
+
+  vars_files:
+    - vaults/vault.yml
+
+  pre_tasks:
+    - name: Delete docker gpg kyering.
+      file:
+        path: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: absent
+
+    - name: Delete docker source list.
+      file:
+        path: /etc/apt/sources.list.d/docker.list
+        state: absent
+
+  roles:
+    - name: Install docker.
+      role: geerlingguy.docker
+      when: docker_enabled | bool
+
+    - name: Install QEMU/KVM.
+      role: docker
+      vars:
+        docker_install_enabled: true
+        kvm_enabled: true
+      when: docker_enabled | bool
+
+- name: Setup Docker Private Registry.
+  hosts: docker_registry
+  become: true
+  tags:
+    - docker
+    - docker_private_registry
+
+  vars_files:
+    - vaults/vault.yml
+
+  roles:
+    - name: Setup docker private registry.
+      role: docker
+      vars:
+        docker_private_registry_enabled: true
+      when: docker_enabled | bool

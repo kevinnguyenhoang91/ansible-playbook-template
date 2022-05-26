@@ -1,0 +1,32 @@
+---
+- name: Install QEMU/KVM.
+  package:
+    name: [qemu, qemu-kvm, libvirt-clients, libvirt-daemon-system, bridge-utils, virt-manager, libguestfs-tools]
+    state: present
+  notify: Reboot machine.
+
+- name: Configure kvm module.
+  modprobe:
+    name: kvm
+    state: present
+    params: "ignore_msrs=1"
+
+- name: Set nested kvm virt.
+  copy:
+    dest: /etc/modprobe.d/kvm.conf
+    content: "options kvm ignore_msrs=1"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start service libvirtd if not started.
+  service:
+    name: libvirtd
+    state: started
+    enabled: true
+
+- name: Start service virtlogd if not started.
+  service:
+    name: virtlogd
+    state: started
+    enabled: true

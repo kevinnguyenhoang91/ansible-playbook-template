@@ -1,0 +1,50 @@
+---
+- name: Ensure directory auth exists.
+  file:
+    dest: "{{ project_dir }}/auth"
+    state: directory
+    owner: "{{ machine_user }}"
+    group: "{{ machine_group }}"
+  notify:
+    - Stop docker registry instance by docker-compose.
+    - Start docker registry instance by docker-compose.
+
+- name: Create htpasswd file.
+  htpasswd:
+    path: "{{ project_dir }}/auth/registry.password"
+    name: "{{ docker_private_registry_login_username }}"
+    password: "{{ docker_private_registry_login_password }}"
+    state: present
+    crypt_scheme: bcrypt
+    owner: "{{ machine_user }}"
+    group: "{{ machine_group }}"
+    mode: 0644
+  notify:
+    - Stop docker registry instance by docker-compose.
+    - Start docker registry instance by docker-compose.
+
+- name: Create docker registry docker-compose file.
+  template:
+    src: "docker-registry.yml.j2"
+    dest: "{{ project_dir }}/docker-compose-registry.yml"
+    owner: "{{ machine_user }}"
+    group: "{{ machine_group }}"
+    mode: 0644
+  notify:
+    - Stop docker registry instance by docker-compose.
+    - Start docker registry instance by docker-compose.
+- name: Check docker registry container.
+  docker_container_info:
+    name: "docker_private_registry"
+  register: docker_private_registry_info
+
+- name: Ensure docker registry is running.
+  command: echo "Container is not started. Start it now."
+  notify:
+    - Stop docker registry instance by docker-compose.
+    - Start docker registry instance by docker-compose.
+  when: not docker_private_registry_info.exists or docker_private_registry_info.container.State.Running == false
+
+- debug:
+    msg: "Docker private registry is running."
+  when: docker_private_registry_info.exists and docker_private_registry_info.container.State.Running == true

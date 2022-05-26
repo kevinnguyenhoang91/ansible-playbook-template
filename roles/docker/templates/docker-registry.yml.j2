@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  registry:
+    image: registry:2
+    container_name: docker_private_registry
+    ports:
+      - "{{ docker_private_registry_port }}:5000"
+    restart: unless-stopped
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
+      REGISTRY_HTTP_SECRET: {{ docker_private_registry_http_secret }}
+    volumes:
+      - {{ project_dir }}/auth:/auth

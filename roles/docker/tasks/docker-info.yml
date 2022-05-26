@@ -1,0 +1,20 @@
+---
+- command: docker ps -a
+  register: info
+
+- debug: var=info.stdout
+
+- command: docker images
+  register: info
+
+- debug: var=info.stdout
+
+- command: docker system df -v
+  register: info
+
+- debug: var=info.stdout
+
+- command: ls -airlh "{{ working_dir }}"
+  register: info
+
+- debug: var=info.stdout
