@@ -2,3 +2,4 @@
 ansible_user: "{{ machine_user }}"
 arch: amd64
 arch_: x86_64
+machine_password: "password"

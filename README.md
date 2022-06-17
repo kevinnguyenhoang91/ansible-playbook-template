@@ -21,7 +21,6 @@
   - `inventory/01_static_inventory`
   - `inventory/host_vars/*.yml`
   - `vaults/vault.yml`
-  - `vaults/vault.vagrant.yml`
 - To manage vaults, use these commands:
 
 ```bash
