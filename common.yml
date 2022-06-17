@@ -7,14 +7,6 @@
     - vaults/vault.yml
 
   roles:
-    - name: Install PiP and Python dependencies.
-      role: kevinnguyenhoang91.pip
-      when: common_enabled | bool
-
-    - name: Install Ansible.
-      role: kevinnguyenhoang91.ansible
-      when: common_enabled | bool
-
     - name: Common setup.
       role: common
       vars:

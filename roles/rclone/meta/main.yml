@@ -1,3 +1,6 @@
 ---
 dependencies:
   - role: common
+
+  - role: stefangweichinger.ansible_rclone
+    when: rclone_install_enabled | bool

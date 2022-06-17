@@ -1,2 +1,7 @@
 ---
-dependencies: []
+dependencies:
+- role: kevinnguyenhoang91.pip
+  when: packages_enabled | bool
+
+- role: kevinnguyenhoang91.ansible
+  when: packages_enabled | bool

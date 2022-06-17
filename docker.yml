@@ -9,22 +9,7 @@
   vars_files:
     - vaults/vault.yml
 
-  pre_tasks:
-    - name: Delete docker gpg kyering.
-      file:
-        path: /usr/share/keyrings/docker-archive-keyring.gpg
-        state: absent
-
-    - name: Delete docker source list.
-      file:
-        path: /etc/apt/sources.list.d/docker.list
-        state: absent
-
   roles:
-    - name: Install docker.
-      role: geerlingguy.docker
-      when: docker_enabled | bool
-
     - name: Install QEMU/KVM.
       role: docker
       vars:

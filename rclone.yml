@@ -11,5 +11,6 @@
 
   roles:
     - name: Setup rclone.
-      role: stefangweichinger.ansible_rclone
-      when: rclone_enabled | bool
+      role: rclone
+      vars:
+        rclone_install_enabled: true

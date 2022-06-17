@@ -6,6 +6,18 @@
   notify: Restart docker service.
   when: docker_install_enabled | bool
 
+- name: Delete docker gpg kyering.
+  file:
+    path: /usr/share/keyrings/docker-archive-keyring.gpg
+    state: absent
+  when: docker_install_enabled | bool
+
+- name: Delete docker source list.
+  file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
+  when: docker_install_enabled | bool
+
 - include_tasks: kvm.yml
   when: kvm_enabled | bool
 
