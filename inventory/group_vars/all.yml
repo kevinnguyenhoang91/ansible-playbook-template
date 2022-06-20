@@ -1,4 +1,6 @@
 ---
+machine_user: my_user
+machine_group: my_group
 ansible_user: "{{ machine_user }}"
 arch: amd64
 arch_: x86_64

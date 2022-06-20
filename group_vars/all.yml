@@ -4,8 +4,6 @@ docker_enabled: true
 rclone_enabled: true
 
 # common role
-machine_user: my_user
-machine_group: my_group
 project_dir: "{{ working_dir }}/my_project"
 pip_install_packages:
   - docker
