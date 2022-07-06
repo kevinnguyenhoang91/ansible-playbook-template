@@ -1,0 +1,25 @@
+---
+roles:
+  - name: kevinnguyenhoang91.ansible
+    src: https://github.com/kevinnguyenhoang91/ansible-role-ansible
+    version: c64dabe912c00e04b6482d74f48f40bc264c880a
+
+  - name: geerlingguy.docker
+    version: 4.2.2
+
+  - name: kevinnguyenhoang91.pip
+    src: https://github.com/kevinnguyenhoang91/ansible-role-pip
+    version: e66d36a49eb092b80df79f45277f0715344b3f6b
+
+  - name: stefangweichinger.ansible_rclone
+    version: main
+
+collections:
+  - name: ansible.posix
+    version: 1.3.0
+
+  - name: community.general
+    version: 4.7.0
+
+  - name: community.docker
+    version: 2.4.0
